@@ -1,0 +1,64 @@
+import streamlit as st
+from PIL import Image
+import os
+
+# Configuración de la página
+st.set_page_config(page_title="Gestor TEIs Mozambique", layout="wide")
+
+# Colores y estilos CSS personalizados
+st.markdown("""
+    <style>
+    .main {
+        background-color: #f2f2f2;
+    }
+    .login-box {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    .login-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .input-label {
+        font-weight: 600;
+        margin-top: 1rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Cargar logo (cambia la ruta por tu archivo real)
+logo_path = "/assets/tei_logo.png"
+if os.path.exists(logo_path):
+    logo = Image.open(logo_path)
+else:
+    logo = None
+
+# Layout en dos columnas
+col1, col2 = st.columns(2)
+
+# Columna izquierda: Título y logo
+with col1:
+    st.markdown("<div class='login-title'>TEIs Mozambique</div>", unsafe_allow_html=True)
+    if logo:
+        st.image(logo, width=200)
+
+# Columna derecha: Login
+with col2:
+    st.markdown("<div class='login-box'>", unsafe_allow_html=True)
+    st.markdown("<div class='login-title'>Acceso de usuario</div>", unsafe_allow_html=True)
+
+    username = st.text_input("Usuario")
+    password = st.text_input("Contraseña", type="password")
+
+    if st.button("Entrar"):
+        # Aquí luego puedes cargar desde un CSV o usar una base SQLite
+        if username == "admin" and password == "tei123":
+            st.success("Autenticado correctamente")
+            st.session_state["usuario"] = username
+        else:
+            st.error("Credenciales incorrectas")
+
+    st.markdown("</div>", unsafe_allow_html=True)
