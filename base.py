@@ -30,7 +30,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Cargar logo (cambia la ruta por tu archivo real)
-logo_path = "/assets/EU.jpg"
+logo_path = "assets/EU.jpg"
 if os.path.exists(logo_path):
     logo = Image.open(logo_path)
 else:
