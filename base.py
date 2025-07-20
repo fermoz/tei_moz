@@ -55,8 +55,8 @@ if not st.session_state.autenticado:
     with col1:
         st.markdown("""
             <div style='display: flex; align-items: center;'>
-                <img src='https://raw.githubusercontent.com/tu_usuario/tu_repo/main/EU.jpeg' width='60' style='margin-right: 10px;'>
-                <h1 style='margin: 0;'>TEIs Mozambique</h1>
+                <img src='https://raw.githubusercontent.com/fermoz/tei_moz/main/EU.jpeg' width='60' style='margin-right: 10px;'>
+                <h2 style='margin: 0;'>TEIs Mozambique</h2>
             </div>
         """, unsafe_allow_html=True)
     with col2:
