@@ -53,11 +53,13 @@ if "autenticado" not in st.session_state:
 if not st.session_state.autenticado:
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("# TEIs Mozambique")
-        logo = Image.open("EU.jpeg")  # ruta relativa a la carpeta donde está el logo
-        st.image(logo, width=150)
+        st.markdown("""
+            <div style='display: flex; align-items: center;'>
+                <img src='https://raw.githubusercontent.com/tu_usuario/tu_repo/main/EU.jpeg' width='60' style='margin-right: 10px;'>
+                <h1 style='margin: 0;'>TEIs Mozambique</h1>
+            </div>
+        """, unsafe_allow_html=True)
     with col2:
-        st.markdown("## Acceso al sistema")
         usuario = st.text_input("Usuario", key="user", label_visibility="collapsed", placeholder="Nombre de usuario")
         clave = st.text_input("Contraseña", type="password", key="pass", label_visibility="collapsed", placeholder="Contraseña")
         if st.button("Entrar"):
@@ -80,3 +82,4 @@ else:
         st.markdown("### Lista de proyectos")
         for proyecto in PROYECTOS:
             st.markdown(f"- {proyecto}")
+
