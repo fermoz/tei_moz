@@ -83,7 +83,7 @@ if not st.session_state.autenticado:
         </style>
         <div class="login-container">
             <div class="left-side">
-                <img class="logo" src='https://raw.githubusercontent.com/fermoz/tei_moz/main/EU.jpg'>
+                <img class="logo" src='https://raw.githubusercontent.com/fermoz/tei_moz/EU.jpg'>
                 <p class="title">TEIs Mozambique</p>
             </div>
             <div class="right-side">
