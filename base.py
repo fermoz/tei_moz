@@ -1,64 +1,82 @@
 import streamlit as st
 from PIL import Image
-import os
 
-# Configuración de la página
-st.set_page_config(page_title="Gestor TEIs Mozambique", layout="wide")
+# Simulación de base de usuarios
+USUARIOS = {
+    "admin": "clave123",
+    "tecnico": "moz2025"
+}
 
-# Colores y estilos CSS personalizados
+# Simulación de proyectos
+PROYECTOS = [
+    "Reforma del sistema educativo rural en Zambezia",
+    "Ampliación de energía solar en escuelas comunitarias",
+    "Programa de alfabetización digital para jóvenes",
+    "Rehabilitación de manglares en la costa norte",
+    "Instalación de mini-hidroeléctricas en Niassa",
+    "Reducción de la deforestación en Inhambane",
+    "Educación bilingüe en escuelas rurales",
+    "Capacitación docente en métodos STEM",
+    "Monitoreo satelital de áreas protegidas",
+    "Expansión de red eléctrica sostenible en Cabo Delgado"
+]
+
+# Estilos CSS personalizados
 st.markdown("""
     <style>
-    .main {
-        background-color: #f2f2f2;
-    }
-    .login-box {
-        background-color: white;
-        padding: 2rem;
-        border-radius: 1rem;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    }
-    .login-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .input-label {
-        font-weight: 600;
-        margin-top: 1rem;
-    }
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .entrada {
+            width: 25% !important;
+            border-radius: 12px !important;
+        }
+        .boton {
+            width: 25% !important;
+        }
+        .menu {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
     </style>
 """, unsafe_allow_html=True)
 
-# Cargar logo (cambia la ruta por tu archivo real)
-logo_path = "EU.jpeg"
-if os.path.exists(logo_path):
-    logo = Image.open(logo_path)
+# Función de autenticación
+def autenticar(usuario, clave):
+    return USUARIOS.get(usuario) == clave
+
+# Layout de la pantalla de login
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("# TEIs Mozambique")
+        logo = Image.open("EU.jpeg")  # ruta relativa a la carpeta donde está el logo
+        st.image(logo, width=150)
+    with col2:
+        st.markdown("## Acceso al sistema")
+        usuario = st.text_input("Usuario", key="user", label_visibility="collapsed", placeholder="Nombre de usuario")
+        clave = st.text_input("Contraseña", type="password", key="pass", label_visibility="collapsed", placeholder="Contraseña")
+        if st.button("Entrar"):
+            if autenticar(usuario, clave):
+                st.session_state.autenticado = True
+                st.rerun()
+            else:
+                st.error("Usuario o contraseña incorrectos")
+
+# Página principal tras login
 else:
-    logo = None
-
-# Layout en dos columnas
-col1, col2 = st.columns(2)
-
-# Columna izquierda: Título y logo
-with col1:
-    st.markdown("<div class='login-title'>TEIs Mozambique</div>", unsafe_allow_html=True)
-    if logo:
-        st.image(logo, width=200)
-
-# Columna derecha: Login
-with col2:
-    st.markdown("<div class='login-box'>", unsafe_allow_html=True)
-    st.markdown("<div class='login-title'>Acceso de usuario</div>", unsafe_allow_html=True)
-
-    username = st.text_input("Usuario")
-    password = st.text_input("Contraseña", type="password")
-
-    if st.button("Entrar"):
-        # Aquí luego puedes cargar desde un CSV o usar una base SQLite
-        if username == "admin" and password == "tei123":
-            st.success("Autenticado correctamente")
-            st.session_state["usuario"] = username
-        else:
-            st.error("Credenciales incorrectas")
-
-    st.markdown("</div>", unsafe_allow_html=True)
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown("### Menú")
+        opcion = st.radio("", ["Analizar", "Actualizar", "Salir"])
+        if opcion == "Salir":
+            st.session_state.autenticado = False
+            st.rerun()
+    with col2:
+        st.markdown("### Lista de proyectos")
+        for proyecto in PROYECTOS:
+            st.markdown(f"- {proyecto}")
